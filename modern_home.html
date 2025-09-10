@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEL SPHERE | Travel Booking Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #f39c12;
+            --accent-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+        }
+
+        /* Modern Navigation */
+        .navbar-modern {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-bg);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-color) !important;
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--gradient-bg);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="100%" style="stop-color:%23764ba2;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23bg)"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-modern {
+            background: var(--gradient-bg);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 100px 0;
+            background: var(--light-color);
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            background: var(--gradient-bg);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        /* Package Cards */
+        .package-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .package-image {
+            height: 250px;
+            background: var(--gradient-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+        }
+
+        .package-content {
+            padding: 1.5rem;
+        }
+
+        .price-tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+            font-weight: bold;
+        }
+
+        /* Search Filter */
+        .search-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: -50px auto 50px;
+            max-width: 1000px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-control-modern {
+            border: 2px solid #eee;
+            border-radius: 15px;
+            padding: 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-modern:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer h5 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .search-section {
+                margin: -30px 1rem 30px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-modern">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-globe-americas me-2"></i>VEL SPHERE
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#packages">Packages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showLoginModal()">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Explore the World with VEL SPHERE</h1>
+            <p class="hero-subtitle">Discover amazing destinations and create unforgettable memories with our premium travel packages</p>
+            <a href="#packages" class="btn btn-modern">Start Your Journey</a>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <div class="container">
+        <div class="search-section">
+            <h4 class="text-center mb-4">Find Your Perfect Trip</h4>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label>Destination</label>
+                        <select class="form-control form-control-modern" id="destinationFilter">
+                            <option value="">All Destinations</option>
+                            <option value="city1">City 1</option>
+                            <option value="city2">City 2</option>
+                            <option value="city3">City 3</option>
+                            <option value="city4">City 4</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label>Budget Range</label>
+                        <select class="form-control form-control-modern" id="budgetFilter">
+                            <option value="">Any Budget</option>
+                            <option value="economic">Economic (₹10k-20k)</option>
+                            <option value="semi-deluxe">Semi Deluxe (₹20k-40k)</option>
+                            <option value="deluxe">Deluxe (₹40k+)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label>Duration</label>
+                        <select class="form-control form-control-modern" id="durationFilter">
+                            <option value="">Any Duration</option>
+                            <option value="3-5">3-5 Days</option>
+                            <option value="5-7">5-7 Days</option>
+                            <option value="7+">7+ Days</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-modern w-100" onclick="applyFilters()">
+                            <span class="loading-spinner" id="loadingSpinner"></span>
+                            Search Packages
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold fade-in">Our Premium Services</h2>
+                    <p class="lead fade-in">Experience world-class travel services tailored to your needs</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <i class="fas fa-mountain service-icon"></i>
+                        <h4>Adventure Tours</h4>
+                        <p>Thrilling adventures and extreme sports packages for adrenaline seekers</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <i class="fas fa-hiking service-icon"></i>
+                        <h4>Hiking & Trekking</h4>
+                        <p>Guided hiking experiences through breathtaking landscapes and trails</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <i class="fas fa-user-tie service-icon"></i>
+                        <h4>Expert Guides</h4>
+                        <p>Professional local guides with extensive knowledge of destinations</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <i class="fas fa-hotel service-icon"></i>
+                        <h4>Luxury Hotels</h4>
+                        <p>Premium accommodation bookings at the finest hotels worldwide</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <i class="fas fa-campground service-icon"></i>
+                        <h4>Camping</h4>
+                        <p>Unique camping experiences in stunning natural locations</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <i class="fas fa-calendar-check service-icon"></i>
+                        <h4>Easy Booking</h4>
+                        <p>Seamless online booking system with instant confirmation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold fade-in">Featured Packages</h2>
+                    <p class="lead fade-in">Discover our most popular travel destinations</p>
+                </div>
+            </div>
+            
+            <div class="row" id="packageContainer">
+                <!-- Packages will be dynamically loaded here -->
+                <div class="col-lg-4 col-md-6 package-item" data-destination="city1" data-budget="economic" data-duration="5-7">
+                    <div class="package-card fade-in">
+                        <div class="package-image">
+                            <div class="price-tag">₹15,999</div>
+                        </div>
+                        <div class="package-content">
+                            <h4>Paradise City 1</h4>
+                            <p>Experience the beauty of pristine beaches and crystal-clear waters in this tropical paradise.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">5 Days</span>
+                                <button class="btn btn-modern btn-sm" onclick="showBookingModal('city1')">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 package-item" data-destination="city2" data-budget="semi-deluxe" data-duration="7+">
+                    <div class="package-card fade-in">
+                        <div class="package-image">
+                            <div class="price-tag">₹28,999</div>
+                        </div>
+                        <div class="package-content">
+                            <h4>Mountain Retreat City 2</h4>
+                            <p>Escape to the serene mountains with breathtaking views and peaceful surroundings.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-success">7 Days</span>
+                                <button class="btn btn-modern btn-sm" onclick="showBookingModal('city2')">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 package-item" data-destination="city3" data-budget="deluxe" data-duration="7+">
+                    <div class="package-card fade-in">
+                        <div class="package-image">
+                            <div class="price-tag">₹45,999</div>
+                        </div>
+                        <div class="package-content">
+                            <h4>Cultural Heritage City 3</h4>
+                            <p>Immerse yourself in rich cultural heritage and historical landmarks.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-warning">8 Days</span>
+                                <button class="btn btn-modern btn-sm" onclick="showBookingModal('city3')">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-primary btn-lg" onclick="loadMorePackages()">
+                    <span class="loading-spinner" id="loadMoreSpinner"></span>
+                    Load More Packages
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="fade-in">
+                        <h2 class="display-5 fw-bold mb-4">About VEL SPHERE</h2>
+                        <p class="lead">We are a premier Tours and Travels agency dedicated to creating unforgettable travel experiences since 2022.</p>
+                        <p>Our team consists of passionate travel experts who leverage cutting-edge technology and local expertise to deliver innovative travel solutions. We pride ourselves on exceptional customer service and creating memories that last a lifetime.</p>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <h3 class="text-primary fw-bold">500+</h3>
+                                    <p>Happy Customers</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <h3 class="text-primary fw-bold">50+</h3>
+                                    <p>Destinations</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="fade-in">
+                        <div class="bg-gradient-primary rounded-3 p-5 text-center" style="min-height: 400px; display: flex; align-items: center; justify-content: center; background: var(--gradient-bg);">
+                            <div class="text-white">
+                                <i class="fas fa-globe-americas fa-5x mb-4"></i>
+                                <h4>Your Adventure Awaits</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold fade-in">Get in Touch</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="contact-info p-4 text-center">
+                                <i class="fas fa-phone fa-2x text-primary mb-3"></i>
+                                <h5>Phone</h5>
+                                <p>+91 123-456-7890<br>+91 111-222-3333</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="contact-info p-4 text-center">
+                                <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
+                                <h5>Email</h5>
+                                <p>info@velsphere.com<br>bookings@velsphere.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5>VEL SPHERE</h5>
+                    <p>Your trusted partner for unforgettable travel experiences worldwide.</p>
+                    <div class="social-links">
+                        <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Contact Info</h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Dharwad, Karnataka, India - 580011</p>
+                    <p><i class="fas fa-phone me-2"></i>+91 123-456-7890</p>
+                    <p><i class="fas fa-envelope me-2"></i>info@velsphere.com</p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2024 VEL SPHERE. Created by Team Alpha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login to VEL SPHERE</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control form-control-modern" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control form-control-modern" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-modern w-100">Login</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Don't have an account? <a href="#" onclick="showSignupModal()">Sign up</a></p>
+                        <p>Are you an Admin? <a href="#" onclick="showAdminModal()">Admin Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar-modern');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Real-time filtering
+        function applyFilters() {
+            const destination = document.getElementById('destinationFilter').value;
+            const budget = document.getElementById('budgetFilter').value;
+            const duration = document.getElementById('durationFilter').value;
+            
+            const spinner = document.getElementById('loadingSpinner');
+            spinner.style.display = 'inline-block';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                const packages = document.querySelectorAll('.package-item');
+                
+                packages.forEach(pkg => {
+                    let show = true;
+                    
+                    if (destination && pkg.dataset.destination !== destination) show = false;
+                    if (budget && pkg.dataset.budget !== budget) show = false;
+                    if (duration && pkg.dataset.duration !== duration) show = false;
+                    
+                    if (show) {
+                        pkg.style.display = 'block';
+                        pkg.style.animation = 'fadeInUp 0.6s ease';
+                    } else {
+                        pkg.style.display = 'none';
+                    }
+                });
+                
+                spinner.style.display = 'none';
+                
+                // Show results count
+                const visiblePackages = document.querySelectorAll('.package-item[style*="block"], .package-item:not([style])').length;
+                console.log(`Found ${visiblePackages} packages matching your criteria`);
+            }, 1000);
+        }
+
+        // Dynamic price calculation
+        function calculatePrice(destination, guests, packageType, duration) {
+            const baseRates = {
+                'city1': 1000,
+                'city2': 1500,
+                'city3': 2000,
+                'city4': 1200
+            };
+            
+            const packageMultipliers = {
+                'economic': 1,
+                'semi-deluxe': 1.5,
+                'deluxe': 2.5
+            };
+            
+            const base = baseRates[destination] || 1000;
+            const multiplier = packageMultipliers[packageType] || 1;
+            const durationDays = parseInt(duration) || 5;
+            
+            return base * multiplier * guests * durationDays;
+        }
+
+        // Show booking modal with dynamic pricing
+        function showBookingModal(destination) {
+            // Create booking modal dynamically
+            const modalHtml = `
+                <div class="modal fade" id="bookingModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Book Your Trip</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="bookingForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Destination</label>
+                                                <select class="form-control form-control-modern" id="bookingDestination" onchange="updatePrice()" required>
+                                                    <option value="${destination}">${destination.toUpperCase()}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Number of Guests</label>
+                                                <input type="number" class="form-control form-control-modern" id="guests" min="1" max="10" value="2" onchange="updatePrice()" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Package Type</label>
+                                                <select class="form-control form-control-modern" id="packageType" onchange="updatePrice()" required>
+                                                    <option value="economic">Economic</option>
+                                                    <option value="semi-deluxe">Semi Deluxe</option>
+                                                    <option value="deluxe">Deluxe</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Duration (Days)</label>
+                                                <input type="number" class="form-control form-control-modern" id="duration" min="3" max="30" value="5" onchange="updatePrice()" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Check-in Date</label>
+                                                <input type="date" class="form-control form-control-modern" id="checkin" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Check-out Date</label>
+                                                <input type="date" class="form-control form-control-modern" id="checkout" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-info">
+                                        <h5>Total Cost: ₹<span id="totalCost">15000</span></h5>
+                                        <small>Price updates in real-time based on your selections</small>
+                                    </div>
+                                    <button type="submit" class="btn btn-modern w-100">Proceed to Payment</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('bookingModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkin').min = today;
+            document.getElementById('checkout').min = today;
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+            modal.show();
+            
+            // Initial price calculation
+            updatePrice();
+        }
+
+        // Update price in real-time
+        function updatePrice() {
+            const destination = document.getElementById('bookingDestination')?.value;
+            const guests = parseInt(document.getElementById('guests')?.value) || 2;
+            const packageType = document.getElementById('packageType')?.value;
+            const duration = parseInt(document.getElementById('duration')?.value) || 5;
+            
+            if (destination && packageType) {
+                const price = calculatePrice(destination, guests, packageType, duration);
+                const totalCostElement = document.getElementById('totalCost');
+                if (totalCostElement) {
+                    totalCostElement.textContent = price.toLocaleString();
+                }
+            }
+        }
+
+        // Show login modal
+        function showLoginModal() {
+            const modal = new bootstrap.Modal(document.getElementById('loginModal'));
+            modal.show();
+        }
+
+        // Show signup modal
+        function showSignupModal() {
+            bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+            
+            const signupModalHtml = `
+                <div class="modal fade" id="signupModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Sign Up for VEL SPHERE</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="signupForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Full Name</label>
+                                                <input type="text" class="form-control form-control-modern" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Phone</label>
+                                                <input type="tel" class="form-control form-control-modern" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control form-control-modern" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Address</label>
+                                        <textarea class="form-control form-control-modern" rows="3" required></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Username</label>
+                                                <input type="text" class="form-control form-control-modern" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Password</label>
+                                                <input type="password" class="form-control form-control-modern" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-modern w-100">Create Account</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const existingSignup = document.getElementById('signupModal');
+            if (existingSignup) {
+                existingSignup.remove();
+            }
+            
+            document.body.insertAdjacentHTML('beforeend', signupModalHtml);
+            const modal = new bootstrap.Modal(document.getElementById('signupModal'));
+            modal.show();
+        }
+
+        // Show admin modal
+        function showAdminModal() {
+            bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+            
+            const adminModalHtml = `
+                <div class="modal fade" id="adminModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Admin Login</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="adminForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Admin Username</label>
+                                        <input type="text" class="form-control form-control-modern" value="admin@123" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Admin Password</label>
+                                        <input type="password" class="form-control form-control-modern" value="iamadmin" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-modern w-100">Admin Login</button>
+                                </form>
+                                <div class="mt-3 text-center">
+                                    <small class="text-muted">Default: admin@123 / iamadmin</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const existingAdmin = document.getElementById('adminModal');
+            if (existingAdmin) {
+                existingAdmin.remove();
+            }
+            
+            document.body.insertAdjacentHTML('beforeend', adminModalHtml);
+            const modal = new bootstrap.Modal(document.getElementById('adminModal'));
+            modal.show();
+        }
+
+        // Load more packages
+        function loadMorePackages() {
+            const spinner = document.getElementById('loadMoreSpinner');
+            spinner.style.display = 'inline-block';
+            
+            const additionalPackages = [
+                {
+                    destination: 'city4',
+                    budget: 'economic',
+                    duration: '3-5',
+                    title: 'Adventure City 4',
+                    description: 'Thrilling adventures and exciting activities in a vibrant urban setting.',
+                    price: '₹18,999',
+                    days: '4 Days'
+                },
+                {
+                    destination: 'city5',
+                    budget: 'deluxe',
+                    duration: '7+',
+                    title: 'Luxury Resort City 5',
+                    description: 'Ultimate luxury experience with world-class amenities and service.',
+                    price: '₹55,999',
+                    days: '10 Days'
+                },
+                {
+                    destination: 'city6',
+                    budget: 'semi-deluxe',
+                    duration: '5-7',
+                    title: 'Coastal Paradise City 6',
+                    description: 'Beautiful coastal views with perfect beaches and water sports.',
+                    price: '₹32,999',
+                    days: '6 Days'
+                }
+            ];
+            
+            setTimeout(() => {
+                const container = document.getElementById('packageContainer');
+                
+                additionalPackages.forEach(pkg => {
+                    const packageHtml = `
+                        <div class="col-lg-4 col-md-6 package-item" data-destination="${pkg.destination}" data-budget="${pkg.budget}" data-duration="${pkg.duration}">
+                            <div class="package-card fade-in">
+                                <div class="package-image">
+                                    <div class="price-tag">${pkg.price}</div>
+                                </div>
+                                <div class="package-content">
+                                    <h4>${pkg.title}</h4>
+                                    <p>${pkg.description}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-info">${pkg.days}</span>
+                                        <button class="btn btn-modern btn-sm" onclick="showBookingModal('${pkg.destination}')">Book Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', packageHtml);
+                });
+                
+                // Trigger fade-in animation for new packages
+                const newPackages = container.querySelectorAll('.package-item:nth-last-child(-n+3)');
+                newPackages.forEach((pkg, index) => {
+                    setTimeout(() => {
+                        pkg.querySelector('.package-card').style.animation = 'fadeInUp 0.6s ease';
+                        observer.observe(pkg.querySelector('.fade-in'));
+                    }, index * 200);
+                });
+                
+                spinner.style.display = 'none';
+                
+                // Hide load more button after loading
+                document.querySelector('.text-center button').style.display = 'none';
+            }, 1500);
+        }
+
+        // Form validations and submissions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Login form validation
+            document.addEventListener('submit', function(e) {
+                if (e.target.id === 'loginForm') {
+                    e.preventDefault();
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    
+                    if (username && password) {
+                        // Simulate login process
+                        setTimeout(() => {
+                            alert('Login successful! Redirecting to dashboard...');
+                            bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+                        }, 1000);
+                    }
+                }
+                
+                if (e.target.id === 'bookingForm') {
+                    e.preventDefault();
+                    alert('Booking submitted! You will be redirected to payment gateway.');
+                    bootstrap.Modal.getInstance(document.getElementById('bookingModal')).hide();
+                }
+                
+                if (e.target.id === 'signupForm') {
+                    e.preventDefault();
+                    alert('Account created successfully! Please login to continue.');
+                    bootstrap.Modal.getInstance(document.getElementById('signupModal')).hide();
+                    showLoginModal();
+                }
+                
+                if (e.target.id === 'adminForm') {
+                    e.preventDefault();
+                    alert('Admin login successful! Redirecting to admin dashboard...');
+                    bootstrap.Modal.getInstance(document.getElementById('adminModal')).hide();
+                }
+            });
+            
+            // Auto-update checkout date based on checkin date and duration
+            document.addEventListener('change', function(e) {
+                if (e.target.id === 'checkin' || e.target.id === 'duration') {
+                    const checkinInput = document.getElementById('checkin');
+                    const checkoutInput = document.getElementById('checkout');
+                    const durationInput = document.getElementById('duration');
+                    
+                    if (checkinInput && checkoutInput && durationInput && checkinInput.value && durationInput.value) {
+                        const checkinDate = new Date(checkinInput.value);
+                        const duration = parseInt(durationInput.value);
+                        const checkoutDate = new Date(checkinDate);
+                        checkoutDate.setDate(checkoutDate.getDate() + duration);
+                        
+                        checkoutInput.value = checkoutDate.toISOString().split('T')[0];
+                    }
+                }
+            });
+        });
+
+        // Performance optimization - lazy loading images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+</body>
+</html>
